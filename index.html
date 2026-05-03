@@ -78,42 +78,81 @@
     filter: drop-shadow(0 0 15px rgba(37, 211, 102, 0.6)); /* Green glow aayega */
 }
 
+/* Mobile Menu Animation */
+#mobile-menu.active {
+    display: block;
+    animation: slideIn 0.4s ease-out forwards;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-20px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.mobile-link {
+    color: #ccd6f6;
+    text-decoration: none;
+}
+
 </style>
 </head>
 <body class="bg-slate-950 text-slate-200">
 
   <!-- Navbar --> 
-  <nav class="bg-slate-900/95 backdrop-blur-lg sticky top-0 z-50 border-b border-violet-500/30">
-  <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col md:flex-row md:items-center md:justify-between">
-
-    <!-- Logo + Text -->
+  <nav class="bg-slate-900/90 backdrop-blur-xl sticky top-0 z-50 border-b border-cyan-500/20">
+  <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+    
     <div class="flex items-center gap-3">
-      <img src="./images/cropped_circle_image.png" alt="Logo" class="w-10 h-10 rounded-full">
-
+      <img src="images/cropped_circle_image.png" alt="Logo" class="w-10 h-10 rounded-full border border-cyan-500/30">
       <div class="flex flex-col">
-        <h1 class="text-xl sm:text-3xl lg:text-4xl font-bold leading-tight logo-text">
-        Social Peak Marketing
+        <h1 class="text-xl font-bold leading-tight tracking-tight text-[#e6f1ff]">
+          Social Peak <span class="text-[#00f2ff]">Marketing</span>
         </h1>
-        <p class="text-sm text-slate-400">
-          Complete Social Media Solutions
-        </p>
       </div>
     </div>
 
-    <!-- Menu -->
-    <div class="hidden md:flex items-center gap-6 mt-4 md:mt-0">
-      <a href="#services" class="hover:text-violet-400 transition-colors">Services</a>
-      <a href="team.html" class="nav-link">Our Team</a>
-      <a href="#contact" class="hover:text-violet-400 transition-colors">Contact</a>
-    </div>
+    <button id="menu-btn" class="md:hidden w-12 h-12 flex items-center justify-center rounded-xl bg-slate-800/50 border border-cyan-500/30 text-[#00f2ff] shadow-[0_0_15px_rgba(0,242,255,0.1)] hover:shadow-[0_0_20px_rgba(0,242,255,0.4)] transition-all duration-300">
+      <i class="fas fa-bars text-xl" id="menu-icon"></i>
+    </button>
 
+    <div class="hidden md:flex items-center gap-8 font-medium">
+      <a href="#services" class="text-[#ccd6f6] hover:text-[#00f2ff] transition-all">Services</a>
+      <a href="team.html" class="text-[#ccd6f6] hover:text-[#00f2ff] transition-all">Our Team</a>
+      <a href="#contact" class="px-5 py-2 bg-cyan-500/10 border border-cyan-500/50 rounded-full text-[#00f2ff] hover:bg-cyan-500 hover:text-slate-950 transition-all">Contact Us</a>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full p-4 transition-all duration-500 ease-in-out">
+    <div class="bg-slate-900/95 backdrop-blur-2xl border border-cyan-500/30 rounded-3xl p-6 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+      <div class="flex flex-col gap-4">
+        <a href="#services" class="mobile-link group">
+          <div class="flex items-center justify-between p-4 rounded-2xl bg-slate-800/40 border border-white/5 group-hover:border-cyan-500/50 transition-all">
+            <span class="text-lg font-semibold">Our Services</span>
+            <i class="fas fa-chevron-right text-cyan-500"></i>
+          </div>
+        </a>
+        <a href="team.html" class="mobile-link group">
+          <div class="flex items-center justify-between p-4 rounded-2xl bg-slate-800/40 border border-white/5 group-hover:border-cyan-500/50 transition-all">
+            <span class="text-lg font-semibold">The Team</span>
+            <i class="fas fa-users text-cyan-500"></i>
+          </div>
+        </a>
+        <a href="#contact" class="mobile-link group">
+          <div class="flex items-center justify-between p-4 rounded-2xl bg-[#00f2ff]/10 border border-[#00f2ff]/30 group-hover:bg-[#00f2ff] transition-all">
+            <span class="text-lg font-bold text-[#00f2ff] group-hover:text-slate-950">Get In Touch</span>
+            <i class="fas fa-paper-plane group-hover:text-slate-950"></i>
+          </div>
+        </a>
+      </div>
+      <p class="text-center text-slate-500 text-xs mt-6 tracking-widest uppercase">Social Peak Marketing • 2026</p>
+    </div>
   </div>
 </nav>
 
   <!-- Hero Section -->
   <header class="hero-bg py-28 text-center">
     <div class="max-w-5xl mx-auto px-6">
-      <img src="./images/cropped_circle_image.png" 
+      <img src="images/cropped_circle_image.png" 
            alt="Social Peak Marketing Logo"
            class="w-64 md:w-80 mx-auto mb-10 drop-shadow-2xl">
       
@@ -128,7 +167,7 @@
   <a href="#services" class="group inline-block">
     <div class="rounded-full overflow-hidden transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_0_30px_rgba(0,242,255,0.4)]">
       
-      <img src="./images/my_image_circle_shape.png" 
+      <img src="images/my_image_circle_shape.png" 
            alt="View Services" 
            class="w-60 h-60 object-cover"> </div>
   </a>
@@ -364,6 +403,34 @@
     document.getElementById('errorPopup').addEventListener('click', function(e) {
       if (e.target === this) closePopup();
     });
+
+
+    // Mobile Menu Toggle Logic
+const menuBtn = document.getElementById('menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+const menuIcon = document.getElementById('menu-icon');
+
+menuBtn.addEventListener('click', () => {
+    // Menu show/hide toggle karein
+    mobileMenu.classList.toggle('hidden');
+    
+    // Icon change karein (Bars se X tak)
+    if (mobileMenu.classList.contains('hidden')) {
+        menuIcon.classList.replace('fa-xmark', 'fa-bars');
+    } else {
+        menuIcon.classList.replace('fa-bars', 'fa-xmark');
+    }
+});
+
+// Link click hone par menu band ho jaye
+const navLinks = mobileMenu.querySelectorAll('a');
+navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        menuIcon.classList.replace('fa-xmark', 'fa-bars');
+    });
+});
+
   </script>
 </body>
 </html>
